@@ -23,65 +23,103 @@ void Game::adicionaTerritorio(string nome, string tam) {
     }
 }
 
-void Game::listaTerritorios() {
-    cout << "Total de territorios: " << territorios.size() << endl;
-
-    for (int i = 0; i < territorios.size();
-            i++) {
-        cout << "Tipo: " << territorios[i]->getType();
-        cout << "\tNome: " << territorios[i]->getName();
-        cout << "\tResistencia: " << territorios[i]->getResistance();
-        cout << "\tItems: " << territorios[i]->getItems();
-        cout << "\tOuro: " << territorios[i]->getGold() << endl;
+void Game::listaTerritorios(){
+    if(territorios.empty()){
+        cout << "\nNao existem territorios!\n";
+    }else{
+        cout << "\nTerritorios existentes: " << t->countTerritorio() << endl;
+        cout << "Planicies: " << t->getPlanicies() << endl;
+        cout << "Montanhas: " << t->getMontanhas() << endl; 
+        cout << "Fortalezas: " << t->getFortalezas() << endl; 
+        cout << "Minas: " << t->getMinas() << endl; 
+        cout << "Dunas: " << t->getDunas() << endl; 
+        cout << "Castelos: " << t->getCastelos() << endl; 
+        cout << "Refugios: " << t->getRefugios() << endl; 
+        cout << "Pescarias: " << t->getPescarias() << endl; 
     }
+    
+    cout << "\n";
+}
+
+void Game::listaTerritorios(string nomeT) {
+    
+    if(territorios.empty()){
+        cout << "\nNao existem territorios!\n";
+    }else{
+        for(int i = 0; i < territorios.size(); i++){
+            if(nomeT == territorios[i]->getName()){
+                cout << "Nome: " << territorios[i]->getName() << endl;
+                cout << "Resistencia: " << territorios[i]->getResistance() << endl;
+                cout << "Producao: " << territorios[i]->getItems() << endl;
+                cout << "Ouro: " << territorios[i]->getGold() << endl;
+            }
+        }
+    }
+    
+    cout << "\n";
 }
 
 void Game::verificaTurnos() {
     for (int i = 0; i < territorios.size(); i++) {
 
-        if(territorios[i]->getType() == "planicie"){
-            if(getYear() == 1){
+        if (territorios[i]->getType() == "planicie") {
+            if (getYear() == 1) {
                 territorios[i]->setItems(2);
             }
         }
-        
-        if(territorios[i]->getType() == "mina"){
-            if(getTurn() >= 0 && getTurn() <= 2){
+
+        if (territorios[i]->getType() == "mina") {
+            if (getTurn() >= 0 && getTurn() <= 2) {
                 territorios[i]->setGold(1);
-            }else if(getTurn() >= 3 && getTurn() <= 5){
+            } else if (getTurn() >= 3 && getTurn() <= 5) {
                 territorios[i]->setGold(2);
             }
         }
-        
-        if(territorios[i]->getType() == "castelo"){
-            if(getTurn() >= 0 && getTurn() <= 1){
+
+        if (territorios[i]->getType() == "castelo") {
+            if (getTurn() >= 0 && getTurn() <= 1) {
                 territorios[i]->setItems(3);
-            }else{
+            } else {
                 territorios[i]->setItems(0);
             }
         }
-        
-        if(territorios[i]->getType() == "pescaria"){
-            if(getYear() == 0){
+
+        if (territorios[i]->getType() == "pescaria") {
+            if (getYear() == 0) {
                 territorios[i]->setItems(2);
-            }else if(getYear() == 1){
+            } else if (getYear() == 1) {
                 territorios[i]->setItems(4);
             }
         }
     }
 }
 
-void Game::setTurn() {
-    if(phase == 3){
-        if(turn == 5){
+void Game::setTurn(Player *p) {
+    if (phase == 3) {
+        if (turn == 5) {
             year++;
             phase = 0;
             turn = 0;
-        }else{
+        } else {
             turn++;
+            p->turnEarnings(p);
             phase = 0;
         }
-    }else{
+    } else {
         phase++;
     }
+}
+
+void Game::conquest(string nameT, Player* p) {
+    int res;
+    
+    territorios = p->addTerritory(p, nameT, territorios, &res);
+    
+    if(res == 1){
+        cout << "\nConquistou com sucesso!\n";
+        setTurn(p);
+    }else{
+        cout << "\nNao conseguiu conquistar!\n";
+    }
+    cout << "\n";
 }

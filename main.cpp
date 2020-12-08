@@ -20,6 +20,8 @@
  * 
  */
 int main(int argc, char** argv) {
+    srand (time(NULL));
+    
     Game g;
     
     World w(&g);
@@ -28,4 +30,3 @@ int main(int argc, char** argv) {
     
     return 0;
 }
-

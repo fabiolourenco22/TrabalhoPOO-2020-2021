@@ -15,12 +15,14 @@
 #define WORLD_H
 #include "game.h"
 #include "territory.h"
+#include "player.h"
 
 class Game;
 class Territory;
 
 class World{
     Game *g;
+    Player *p;
     Territory *t;
     vector<string> arg;
     
@@ -29,9 +31,7 @@ public:
     World(Game *game){
         g = game;
     }
-    ~World(){
-        cout << "Mundo apagado!\n";
-    }
+    ~World(){}
     
     void interface();
     void execComando(string);

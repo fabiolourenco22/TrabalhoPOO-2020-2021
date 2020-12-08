@@ -45,6 +45,27 @@ int Territory::getGold() const{
 int Territory::getPlanicies() const {
     return numPlanicie;
 }
+int Territory::getMontanhas() const {
+    return numMontanha;
+}
+int Territory::getFortalezas() const {
+    return numFortaleza;
+}
+int Territory::getMinas() const {
+    return numMina;
+}
+int Territory::getDunas() const {
+    return numDuna;
+}
+int Territory::getCastelos() const {
+    return numCastelo;
+}
+int Territory::getRefugios() const {
+    return numRefugio;
+}
+int Territory::getPescarias() const {
+    return numPescaria;
+}
 
 int Territory::countTerritorio() const {
     return totalTerritorios;
@@ -52,6 +73,14 @@ int Territory::countTerritorio() const {
 
 Territory::Territory(string nome) {
     ostringstream oss;
+    
+    if(nome == "home"){
+        type = nome;
+        name = nome;
+        resistance = 9;
+        items = gold = 1;
+    }
+    
     if (nome == "planicie") {
         oss << nome << numPlanicie + 1;
         
@@ -144,4 +173,34 @@ Territory::Territory(string nome) {
         numPescaria++;
         totalTerritorios++;
     }
+}
+
+void Territory::decreaseTerritory(string type){
+    if(type == "planicie"){
+        numPlanicie--;
+    }
+    
+    if(type == "montanha"){
+        numMontanha--;
+    }
+    if(type == "fortaleza"){
+        numFortaleza--;
+    }
+    if(type == "mina"){
+        numMina--;
+    }
+    if(type == "duna"){
+        numDuna--;
+    }
+    if(type == "castelo"){
+        numCastelo--;
+    }
+    if(type == "refugio"){
+        numRefugio--;
+    }
+    if(type == "pescaria"){
+        numPescaria--;
+    }
+    
+    totalTerritorios--;
 }

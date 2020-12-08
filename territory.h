@@ -10,7 +10,6 @@
  *
  * Created on 1 de dezembro de 2020, 18:27
  */
-
 #ifndef TERRITORY_H
 #define TERRITORY_H
 #include "utils.h"
@@ -23,7 +22,7 @@ static int numDuna = 0;
 static int numCastelo = 0;
 static int numRefugio = 0;
 static int numPescaria = 0;
-static int totalTerritorios = 1;
+static int totalTerritorios = 0;
 
 class Territory{
     string name;
@@ -41,8 +40,18 @@ public:
     int getResistance() const;
     int getItems() const;
     int getGold() const;
+    
     int getPlanicies() const;
+    int getMontanhas() const;
+    int getFortalezas() const;
+    int getMinas() const;
+    int getCastelos() const;
+    int getDunas() const;
+    int getRefugios() const;
+    int getPescarias() const;
     int countTerritorio() const;
+    
+    void decreaseTerritory(string);
     
     void setTerritorio(string, string);
     void printTerritorio(int);

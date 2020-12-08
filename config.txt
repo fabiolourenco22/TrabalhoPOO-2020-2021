@@ -1,1 +1,5 @@
 cria planicie 5
+cria montanha 3
+cria duna 4
+cria refugio 9
+cria castelo 6

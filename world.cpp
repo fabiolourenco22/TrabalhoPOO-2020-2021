@@ -24,7 +24,7 @@ void World::execComando(string comando) {
     string cmd;
     stringstream ss(comando);
     ss >> cmd;
-    
+
     arg = checkArg(comando);
 
     if (cmd == "carrega") {
@@ -32,29 +32,41 @@ void World::execComando(string comando) {
     }
 
     if (cmd == "lista") {
-        g->listaTerritorios();
+        if (arg.size() == 1) {
+            g->listaTerritorios();
+        } else {
+            if (arg[1] == "player") {
+                p->listaPlayerT();
+            } else {
+                g->listaTerritorios(arg[1]);
+            }
+        }
+
     }
 
     if (cmd == "cria") {
         g->adicionaTerritorio(arg[1], arg[2]);
-        
+
     }
-    
-    if(cmd == "passa"){
-        g->setTurn();
+
+    if (cmd == "passa") {
+        g->setTurn(p);
     }
-    
-    if(cmd == "conquista"){
-        if(g->getPhase() == 0){
-            cout << "Vai conquistar\n";
-        }else{
-            cout << "Nao pode conquistar na fase atual!\n";
+
+    if (cmd == "conquista") {
+        if (g->getPhase() == 0) {
+            g->conquest(arg[1], p);
+
+        } else {
+            cout << "\nNao pode conquistar na fase atual!\n";
         }
     }
 }
 
 void World::interface() {
     string comando;
+
+    p = new Player(2);
 
     cout << " ______________________________" << endl;
     cout << "|                              |" << endl;
@@ -75,7 +87,6 @@ void World::interface() {
 
     } while (comando.compare("sair"));
 
-//    delete(t);
     delete(g);
 }
 
@@ -89,17 +100,16 @@ void World::carregaConfig(string nomeFich) {
         cerr << "Erro ao abrir o ficheiro!\n";
         exit(1);
     } else {
-        cout << "O ficheiro " << nomeFich << " foi aberto corretamente!\n";
+        cout << "\nO ficheiro " << nomeFich << " foi aberto corretamente!\n";
     }
 
 
     while (getline(myFile, str)) {
-        execComando(str);       
+        execComando(str);
     }
-    
+
     myFile.close();
 }
-
 
 vector<string> World::checkArg(string str) {
     vector<string> result;

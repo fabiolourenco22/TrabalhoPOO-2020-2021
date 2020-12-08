@@ -24,9 +24,9 @@
 #include <vector>
 #include <iterator>
 #include <cstdlib>
+#include <time.h>
 
 using namespace std;
 
 
 #endif /* UTILS_H */
-
